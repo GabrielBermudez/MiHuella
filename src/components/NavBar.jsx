@@ -13,8 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Logo from '../images/mi_huella.jpg';
 import SakuraDevCode from '../images/sakuradevcode.png';
+import CartWidget from "./CartWidget";
 
-const pages = ['Productos', 'Nosotros', 'Contacto'];
+const pages = ['Productos', 'Nosotros', 'Contacto', <CartWidget quantity={3}/>];
 const settings = ['Inicio', 'Mi Perfil', 'Configuración', 'Salir'];
 
 const NavBar = () => {
