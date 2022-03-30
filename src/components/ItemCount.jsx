@@ -31,7 +31,7 @@ export default function ItemCount({stocks, initial}) {
         <CardMedia
           component="img"
           height="140"
-          image={Producto_1}
+          image="./images/producto_1.png"
           alt="Producto en venta"
         />
         <CardContent>
