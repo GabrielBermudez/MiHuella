@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <NavBar />
         {/*<ItemListContainer title="Catalogo de Productos"/>*/}
-        <ItemList />
+        <ItemList key="ItemList1" />
     </div>
   );
 }

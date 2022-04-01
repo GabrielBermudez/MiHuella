@@ -9,12 +9,12 @@ import Grid from '@mui/material/Grid';
 import { CardActionArea } from '@mui/material';
 import Button from '@mui/material/Button';
 
-export default function Item({data}) {
+export default function Item({data, showItem}) {
   const {id, title, price, image, stock} = data;
   return (
     <>
         <Card sx={{ maxWidth: 345 }}>
-        <CardActionArea>
+        <CardActionArea onClick={() => showItem(id)}>
             <CardMedia
             component="img"
             height="140"
@@ -31,7 +31,7 @@ export default function Item({data}) {
                 <Typography gutterBottom variant="h5" component="div" >
                     Stock: {stock}
                 </Typography>
-                <Button variant="contained" style={{textDecoration: 'none'}}>Comprar</Button>
+                <Button variant="contained" style={{textDecoration: 'none'}} >Comprar</Button>
             </CardContent>
         </CardActionArea>
         </Card>

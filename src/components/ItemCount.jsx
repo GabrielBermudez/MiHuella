@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { CardActionArea } from '@mui/material';
-import Producto_1 from '../images/producto_1.png';
 import Button from '@mui/material/Button';
 
 export default function ItemCount({stocks, initial}) {
