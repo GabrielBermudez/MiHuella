@@ -14,8 +14,10 @@ import MenuItem from '@mui/material/MenuItem';
 import Logo from '../images/mi_huella.jpg';
 import SakuraDevCode from '../images/sakuradevcode.png';
 import CartWidget from "./CartWidget";
+import {Link} from "react-router-dom";
 
-const pages = ['Productos', 'Nosotros', 'Contacto', <CartWidget quantity={3}/>];
+const pages = [{title:'Productos', url:'/'}, {title:'Nosotros', url:'us'}, {title:'Contacto', url:'contact'}];
+const cartWidget = <CartWidget quantity={3}/>;
 const settings = ['Inicio', 'Mi Perfil', 'Configuración', 'Salir'];
 
 const NavBar = () => {
@@ -47,7 +49,7 @@ const NavBar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-            <img src={Logo} alt="" style={{width: '60px', borderRadius: '100px',}}/>
+            <Link to="/"><img src={Logo} alt="" style={{width: '60px', borderRadius: '100px',}}/> </Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -79,11 +81,12 @@ const NavBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {pages.map((page, id) => (
+                <MenuItem key={id} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center"><Link to={page.url}>{page.title}</Link></Typography>
                 </MenuItem>
               ))}
+              <Typography textAlign="center">{cartWidget}</Typography>
             </Menu>
           </Box>
           <Typography
@@ -95,15 +98,16 @@ const NavBar = () => {
             <img src={Logo} alt="" style={{width: '40px', borderRadius: '100px',}}/>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pages.map((page, id) => (
               <Button
-                key={page}
+                key={id}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                <Link to={page.url} style={{textDecoration:'none', color: 'white'}}>{page.title}</Link>
               </Button>
             ))}
+            {cartWidget}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

@@ -1,10 +1,23 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { CardActionArea, Card, CardContent, CardMedia, Typography, Box, Grid, Button } from '@mui/material';
-
+import ProductsMock from '../ProductsMock';
+import Container from '@mui/material/Container';
+import Item from './Item';
+import {useParams} from 'react-router-dom';
 
 export default function ItemListContainer({data}){
-	const {id, title, description, price, stock, image} = data;
+	const [product, setProduct] = useState({});
+	const {id} = useParams();
 
+	const filterProductByID = () => {
+		return ProductsMock.find(product => product.id == id)
+	}
+
+	useEffect(() =>{
+		setProduct(filterProductByID());
+	}, [id])
+
+	
 	return (
 		<>
 			<Card sx={{ maxWidth: '100%' }}>
@@ -15,16 +28,16 @@ export default function ItemListContainer({data}){
 					        	<CardMedia
 						          component="img"
 						          height="400"
-						          image={`./images/${image}`}
+						          image={`../images/${product.image}`}
 						          alt="Producto en venta"
 						        />
 						    </Grid>
 						    <Grid item xs={4}>
 						    	<div>
-						    		Nombre: {title} <br />
-						    		Descripción: {description} <br />
-						    		Precio: ${price} <br />
-						    		Stock: {stock} <br />
+						    		Nombre: {product.title} <br />
+						    		Descripción: {product.description} <br />
+						    		Precio: ${product.price} <br />
+						    		Stock: {product.stock} <br />
 						    	</div>
 						    	<Button variant="contained" style={{textDecoration: 'none'}}>Comprar</Button> 
 						    </Grid>
