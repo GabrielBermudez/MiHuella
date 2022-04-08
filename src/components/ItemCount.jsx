@@ -8,31 +8,27 @@ import Grid from '@mui/material/Grid';
 import { CardActionArea } from '@mui/material';
 import Button from '@mui/material/Button';
 
-export default function ItemCount({stocks, initial}) {
+export default function ItemCount({stocks, initial, onAdd}) {
 
     const [itemCount, setItemCount] = useState(initial);
     const [stock, setStock] = useState(stocks)
 
-    const addItem = () => {
+    const addItem = (e) => {
+        e.preventDefault();
+        console.log(itemCount < stock);
         if(itemCount < stock)
             setItemCount(itemCount + 1);
     }
 
-    const decresedItem = () => {
+    const decresedItem = (e) => {
+        e.preventDefault();
         if(itemCount > 0)
             setItemCount(itemCount -1);
     }
 
   return (
     
-    <Card sx={{ maxWidth: 345 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image="./images/producto_1.png"
-          alt="Producto en venta"
-        />
+    <Card sx={{ maxWidth: 345 }} style={{backgroundColor: 'whitesmoke'}} >
         <CardContent>
             <Typography gutterBottom variant="h5" component="div">
                 Stock: {stock}
@@ -50,9 +46,8 @@ export default function ItemCount({stocks, initial}) {
                     </Grid>
                 </Grid>
             </Box>
-            <Button variant="contained" style={{textDecoration: 'none'}}>Agregar al Carrito</Button>
+            <Button variant="contained" style={{textDecoration: 'none'}} onClick={(e) => onAdd(e, itemCount)}>Agregar al Carrito</Button>
         </CardContent>
-      </CardActionArea>
     </Card>
   );
 }

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { CardActionArea, Card, CardContent, CardMedia, Typography, Box, Grid, Button } from '@mui/material';
 import ProductsMock from '../ProductsMock';
 import Container from '@mui/material/Container';
-import Item from './Item';
+import ItemDetail from './ItemDetail';
 import {useParams} from 'react-router-dom';
 
 export default function ItemListContainer({data}){

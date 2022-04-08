@@ -1,5 +1,5 @@
 //imr ffc
-import React from 'react';
+import React, {useState} from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -8,10 +8,26 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { CardActionArea } from '@mui/material';
 import Button from '@mui/material/Button';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import ItemCount from './ItemCount';
 
-export default function Item({data}) {
+export default function ItemDetail({data}) {
   const {id, title, price, image, stock} = data;
+  const navigate = useNavigate();
+
+  const [showItemCount, setShowItemCount] = useState(true);
+
+  const onAdd = (e, itemCount) => {
+    e.preventDefault();
+    console.log("Cantidad de items seleccionados: " + itemCount);
+    setShowItemCount(false);
+  }
+
+  const navigateToCart = (e) => {
+    e.preventDefault();
+    navigate('/cart');
+  }
+
   return (
     <>
         <Card sx={{ maxWidth: 345 }}>
@@ -30,10 +46,13 @@ export default function Item({data}) {
                         <Typography gutterBottom variant="h5" component="div">
                             Precio: {price}
                         </Typography>
-                        <Typography gutterBottom variant="h5" component="div" >
-                            Stock: {stock}
-                        </Typography>
-                        <Button variant="contained" style={{textDecoration: 'none'}} ><Link to={`/item/${id}`}>Comprar</Link></Button>
+                        {
+                            showItemCount && <ItemCount stocks={stock} initial={0} onAdd={onAdd} />
+                        }
+                        {
+
+                            !showItemCount && <Button variant="contained" onClick={navigateToCart}>Terminar Compra</Button>
+                        }
                     </CardContent>
                 </CardActionArea>
             </Link>

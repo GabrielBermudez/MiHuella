@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Container from '@mui/material/Container';
-import Item from './Item';
+import ItemDetail from './ItemDetail';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import {useParams} from 'react-router-dom';
@@ -30,18 +30,17 @@ export default function ItemListContainer({title}) {
         }
     }, [id])
 
-    console.log(products);
     return (
         <>
             <Container maxWidth="xl">
-                <div style={{textAlign: 'center', textDecoration: 'underline' , boxShadow: '1px 5px 15px gray', height: '75vh'}}>
+                <div style={{textAlign: 'center', textDecoration: 'underline' , boxShadow: '1px 5px 15px gray', height: '100vh'}}>
                    <h1>{title}</h1>
                     <Box sx={{ flexGrow: 1 }}>
                         <Grid container spacing={2}>
                             {products.map( (product) => {
                                 return (
                                     <Grid item xs={4}>
-                                        <Item data={product} key={product.id}/>
+                                        <ItemDetail data={product} key={product.id} />                                        
                                     </Grid> 
                                 );
                             })}
