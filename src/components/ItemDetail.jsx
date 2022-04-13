@@ -1,5 +1,5 @@
 //imr ffc
-import React, {useState} from 'react';
+import React, { useContext } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -10,22 +10,18 @@ import { CardActionArea } from '@mui/material';
 import Button from '@mui/material/Button';
 import {Link, useNavigate} from 'react-router-dom';
 import ItemCount from './ItemCount';
+import CartContext from '../context/CartContext';
 
 export default function ItemDetail({data}) {
   const {id, title, price, image, stock} = data;
+ 
   const navigate = useNavigate();
 
-  const [showItemCount, setShowItemCount] = useState(true);
+  const {addProductToCart} = useContext(CartContext);
 
-  const onAdd = (e, itemCount) => {
+  const addToCart = (e, itemCount) => {
     e.preventDefault();
-    console.log("Cantidad de items seleccionados: " + itemCount);
-    setShowItemCount(false);
-  }
-
-  const navigateToCart = (e) => {
-    e.preventDefault();
-    navigate('/cart');
+    addProductToCart(data, itemCount);
   }
 
   return (
@@ -46,13 +42,7 @@ export default function ItemDetail({data}) {
                         <Typography gutterBottom variant="h5" component="div">
                             Precio: {price}
                         </Typography>
-                        {
-                            showItemCount && <ItemCount stocks={stock} initial={0} onAdd={onAdd} />
-                        }
-                        {
-
-                            !showItemCount && <Button variant="contained" onClick={navigateToCart}>Terminar Compra</Button>
-                        }
+                        <ItemCount stocks={stock} initial={0} addToCart={addToCart} />
                     </CardContent>
                 </CardActionArea>
             </Link>

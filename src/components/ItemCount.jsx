@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import { CardActionArea } from '@mui/material';
 import Button from '@mui/material/Button';
 
-export default function ItemCount({stocks, initial, onAdd}) {
+export default function ItemCount({stocks, initial, addToCart}) {
 
     const [itemCount, setItemCount] = useState(initial);
     const [stock, setStock] = useState(stocks)
@@ -24,6 +24,11 @@ export default function ItemCount({stocks, initial, onAdd}) {
         e.preventDefault();
         if(itemCount > 0)
             setItemCount(itemCount -1);
+    }
+
+    const onAdd = (e, itemCount) => {
+        setItemCount(0);
+        addToCart(e, itemCount);
     }
 
   return (
