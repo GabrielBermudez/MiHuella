@@ -1,21 +1,32 @@
 import React, {useState, useEffect} from 'react';
-import { CardActionArea, Card, CardContent, CardMedia, Typography, Box, Grid, Button } from '@mui/material';
-import ProductsMock from '../ProductsMock';
-import Container from '@mui/material/Container';
-import ItemDetail from './ItemDetail';
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, CardMedia, Typography, Box, Grid, Button } from '@mui/material';
 import {useParams} from 'react-router-dom';
+import db from '../firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 export default function ItemListContainer({data}){
 	const [product, setProduct] = useState({});
 	const {id} = useParams();
+	const navigate = useNavigate();
 
-	const filterProductByID = () => {
-		return ProductsMock.find(product => product.id == id)
-	}
+	const getProductByID = async () => {
+        const docRef = doc(db, 'products', id);
+        const docSnap = await getDoc(docRef);
+        
+        if(docSnap.exists()){
+			let product = docSnap.data();
+			product.id = docSnap.id;
+			setProduct(product);
+		}else{
+			console.log("Document no encontrado!");
+			navigate('/error');
+		}
+    }
 
-	useEffect(() =>{
-		setProduct(filterProductByID());
-	}, [id])
+	useEffect(() => { 
+        getProductByID(id);
+    }, [id])
 
 	
 	return (

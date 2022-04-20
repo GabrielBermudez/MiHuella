@@ -16,7 +16,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="*" element={<h1>Has Error Ocurred</h1>} />
             <Route path="item/:id" element={<ItemDetailContainer />} />
-            <Route path="category/:id" element={<ItemListContainer />} />
+            <Route path="category/:category" element={<ItemListContainer />} />
             <Route path="/cart" element={<CartPage />} />
             {/*<Route path="contact" element={<ContactPage />} />*/}
           </Routes>

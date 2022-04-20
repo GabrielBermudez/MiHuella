@@ -40,7 +40,7 @@ export default function ItemDetail({data}) {
                             Nombre: {title}
                         </Typography>
                         <Typography gutterBottom variant="h5" component="div">
-                            Precio: {price}
+                            Precio: ${price}
                         </Typography>
                         <ItemCount stocks={stock} initial={0} addToCart={addToCart} />
                     </CardContent>

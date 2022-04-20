@@ -4,31 +4,35 @@ import ItemDetail from './ItemDetail';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import {useParams} from 'react-router-dom';
-import ProductsMock from '../ProductsMock';
+import db from '../firebase';
+import { collection, getDocs } from 'firebase/firestore';
 
 export default function ItemListContainer({title}) {
     const [products, setProducts] = useState([]);
-    const {id} = useParams();
+    const {category} = useParams();
 
-    const getAllProducts = () => {
-        return new Promise((resolve, reject) => {
-            return resolve(ProductsMock);
-        })
+    const getAllProducts = async () => {
+        const itemCollection = collection(db, 'products');
+        const productsSnapshot = await getDocs(itemCollection);
+        const productList = productsSnapshot.docs.map((doc) => {
+            let product = doc.data();
+            product.id = doc.id;
+
+            return product;
+        });
+        return productList;
     }
     
-    useEffect( () => {
-        if(id != undefined){
-            console.log("entre");
-            console.log(ProductsMock.filter(product => product.category_id == id));
-            setProducts(ProductsMock.filter(product => product.category_id == id));
-        }else{
-            getAllProducts().then( (data) => {
-                setProducts(data);
-            }).finally(() => {
-                console.log("Fin del UseEffect");
-            })
-        }
-    }, [id])
+    useEffect( () => { 
+        getAllProducts().then( (data) => {
+            category ?
+                setProducts(data.filter(product => product.category == category))
+            :
+            setProducts(data);
+        }).finally(() => {
+            console.log("Fin del UseEffect");
+        })
+    }, [category])
 
     return (
         <>
