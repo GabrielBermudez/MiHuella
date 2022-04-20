@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,12 +15,14 @@ import Logo from '../images/mi_huella.jpg';
 import SakuraDevCode from '../images/sakuradevcode.png';
 import CartWidget from "./CartWidget";
 import {Link} from "react-router-dom";
+import CartContext from "../context/CartContext";
 
 const pages = [{title:'Productos', url:'/'}, {title:'Nosotros', url:'us'}, {title:'Contacto', url:'contact'}];
-const cartWidget = <CartWidget quantity={3}/>;
+const cartWidget = <CartWidget />;
 const settings = ['Inicio', 'Mi Perfil', 'Configuración', 'Salir'];
 
 const NavBar = () => {
+  const { cartProducts } = useContext(CartContext);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -86,7 +88,7 @@ const NavBar = () => {
                   <Typography textAlign="center"><Link to={page.url}>{page.title}</Link></Typography>
                 </MenuItem>
               ))}
-              <Typography textAlign="center">{cartWidget}</Typography>
+              <Typography textAlign="center">{cartProducts.length > 0 && cartWidget}</Typography>
             </Menu>
           </Box>
           <Typography
@@ -107,7 +109,7 @@ const NavBar = () => {
                 <Link to={page.url} style={{textDecoration:'none', color: 'white'}}>{page.title}</Link>
               </Button>
             ))}
-            {cartWidget}
+            {cartProducts.length > 0 && cartWidget}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
